@@ -65,7 +65,9 @@ So `build_trace` that takes in a list of data points as arguments and returns a 
 
 ```python
 def build_trace(data, mode = 'markers', name = 'data'):
-    pass
+    x_values = list(map(lambda datapoint: datapoint['x'], data))
+    y_values = list(map(lambda datapoint: datapoint['y'], data))
+    return {'x': x_values, 'y': y_values, 'mode': mode, 'name': name}
 ```
 
 So by default, if we just call `build_trace(data)` without specifying either a mode or a name, the function will automatically set these parameters to 'markers' and 'data' respectively.
@@ -113,7 +115,7 @@ Now let's write another function to create a trace called `trace_values`.  It wo
 
 ```python
 def trace_values(x_values, y_values, mode = 'markers', name="data"):
-     pass
+     return {'x': x_values, 'y': y_values, 'mode': mode, 'name': name}
 ```
 
 
@@ -157,7 +159,11 @@ Our `layout` function should return a dictionary, just as it's defined in the ab
 
 ```python
 def layout(x_range = None, y_range = None, options = {}):
-    pass
+    layout = {}
+    if isinstance(x_range, list): layout.update({'xaxis': {'range': x_range}})
+    if isinstance(y_range, list): layout.update({'yaxis': {'range': y_range}})
+    layout.update(options)
+    return layout
 ```
 
 
